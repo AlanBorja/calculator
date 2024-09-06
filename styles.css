@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+}
+
+.contenedor {
+    display: grid;
+    width: 5dvw;
+    margin: auto;
+    grid-template-columns: repeat(3,auto);
+}
+
+
