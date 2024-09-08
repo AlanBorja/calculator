@@ -2,11 +2,15 @@ body {
     margin: 0;
 }
 
-.contenedor {
+.contenedor2 {
     display: grid;
     width: 5dvw;
     margin: auto;
-    grid-template-columns: repeat(3,auto);
+    grid-template-columns: repeat(5,auto);
 }
 
+.contenedor1 {
+    display: grid;
+    justify-content: center;
+}
 
