@@ -9,12 +9,35 @@ function actualizarResultado(numero){
 
     return numero
 }
-
+function ejecutarCalculo(operador,resultado,siguienteNumero) {
+    switch (operador) {
+        case '+':
+            resultado += siguienteNumero;
+            break;
+        case '-':
+            resultado -= siguienteNumero;
+            break;
+        case '*':
+            resultado *= siguienteNumero;
+            break;
+        case '/':
+            resultado /= siguienteNumero;
+            break;
+        case '**':
+            resultado = resultado ** siguienteNumero;
+            break;
+        default:
+            console.error('Operador no soportado', operador)
+    }
+    return resultado;
+}
 function darResultado() {
     let evaluar = document.querySelector('.resultado').textContent;
     const numerosSplit = evaluar.split(/(\+|\-|\*\*|\/|\*|\(|\))/);
     let resultado = parseFloat(numerosSplit[0]);
     let lastDigit;
+    const regex = /(\+|\-|\*\*|\/|\*|\(|\))/;
+    
     for (let i = 1; i < numerosSplit.length; i +=2) {
         const operador = numerosSplit[i];
         const siguienteNumero = parseFloat(numerosSplit[i + 1]);
@@ -25,32 +48,20 @@ function darResultado() {
             break
 
         };
-        //Intentando hacer que si el ultimo digito es un operador, lo guarde como parte de resultado y lo use en la siguiente operacion, tiene que aparecer asi por ejemplo 2+2+ = 4+
-        console.log(numerosSplit)
-        console.log(numerosSplit[numerosSplit.length-2])
-        console.log(numerosSplit[numerosSplit.length] == operador)
-        switch (operador) {
-            case '+':
-                resultado += siguienteNumero;
+        if (numerosSplit[numerosSplit.length-1] === '') {
+                resultado = ejecutarCalculo(operador,resultado,resultado);
+                document.querySelector('.resultado').textContent = resultado;
                 break;
-            case '-':
-                resultado -= siguienteNumero;
-                break;
-            case '*':
-                resultado *= siguienteNumero;
-                break;
-            case '/':
-                resultado /= siguienteNumero;
-                break;
-            case '**':
-                resultado = resultado ** siguienteNumero;
-                break;
-            default:
-                console.error('Operador no soportado', operador)
-        }
-    }
-    document.querySelector('.resultado').textContent = resultado;
+        }   
+
+        resultado = ejecutarCalculo(operador,resultado,siguienteNumero);
 }
+    document.querySelector('.resultado').textContent = resultado.toFixed(2);
+    if (numerosSplit.length == 1) {
+        document.querySelector('.resultado').textContent = 'error';
+    } else if (numerosSplit[numerosSplit.length-1] == 0 && numerosSplit[numerosSplit.length-2] == '/') {
+        document.querySelector('.resultado').textContent = 'NO PODES DIVIDIR ENTRE 0';
+    }}
 
 function borrarUno(){
     let aBorrar = document.querySelector('.resultado').textContent;
