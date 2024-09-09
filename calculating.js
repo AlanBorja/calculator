@@ -1,8 +1,3 @@
-/*
-1) Hacer que al clickear el boton se actualice el valor de resultado.
-
-*/
-
 function actualizarResultado(numero){
     let newResultado = document.querySelector('.resultado');
     newResultado.textContent += numero
@@ -36,7 +31,6 @@ function darResultado() {
     const numerosSplit = evaluar.split(/(\+|\-|\*\*|\/|\*|\(|\))/);
     let resultado = parseFloat(numerosSplit[0]);
     let lastDigit;
-    const regex = /(\+|\-|\*\*|\/|\*|\(|\))/;
     
     for (let i = 1; i < numerosSplit.length; i +=2) {
         const operador = numerosSplit[i];
@@ -87,4 +81,15 @@ document.querySelectorAll('button').forEach((numero)=> {
         else {
             actualizarResultado(numero.textContent);}
     });
+});
+
+document.addEventListener('keyup', (event) => {
+    const variables = /^[0-9+\-*/.]$/;
+    if (event.key === 'Backspace') {
+        borrarUno();
+    } else if (event.key === 'Enter'){
+        darResultado();
+    } else if (variables.test(event.key)){
+        actualizarResultado(event.key);
+    }
 });
